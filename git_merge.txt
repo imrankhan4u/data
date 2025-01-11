@@ -1,0 +1,52 @@
+git
+
+sudo su 
+
+yum install git -y
+
+git config --global user.name "imrankhan4u"
+
+git config --global user.email "imrankhanu5117@gmail.com"
+
+git clone https://github.com/imrankhan4u/merge.git
+
+cd merge/
+
+nano f1
+
+nano f2
+
+nano f3
+
+git add .
+
+git commit -m "first commit"
+
+git checkout -b future-branch
+
+git status
+
+nano f1
+
+git add .
+
+git commit -m "second commit"
+
+git checkout main
+
+nano f1
+
+git add .
+
+git commit -m "commit from main"
+
+git merge future-branch
+
+git add .
+
+git commit -m "resolve conflicts"
+
+git merge future-branch
+
+git log
+

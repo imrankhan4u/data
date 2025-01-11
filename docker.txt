@@ -1,0 +1,89 @@
+sudo su
+
+yum install docker -y
+
+useradd dockeradmin
+
+passwd dockeradmin
+
+find -name sshd_config
+
+nano /etc/ssh/sshd_config
+
+PasswordAuthentication yes
+
+visudo
+
+dockeradmin	ALL=(ALL)	NOPASSWD: ALL
+
+service sshd reload
+
+usermod -aG docker dockeradmin
+
+nano /etc/group
+
+cd /opt
+
+mkdir docker
+
+ls -l
+
+chown -R dockeradmin:dockeradmin docker/
+
+ls -l
+
+cd docker/
+
+nano dockerfile
+
+FROM tomcat:latest
+RUN cp -R /usr/local/tomcat/webapps.dist/* /usr/local/tomcat/webapps
+COPY ./*.war /usr/local/tomcat/webapps
+
+service docker start
+
+edit inbound rules
+
+manage Jenkins > system > add > under SSH Server > name : docker > host name : private IP of docker > username : dockeradmin > enable password authentication > password : dockeradmin > test configuration > apply and save 
+
+dashboard > new item > docker > maven project > enable git > set  repository url > don't enable poll scm > goals & actions : clean install > add post build actions > send build artifacts over ssh > name : docker > source file : target/*.war > remove prefix : target > remote directory > //opt//docker
+
+exec command :
+ 
+cd /opt/docker
+docker build -t dtomcat
+docker run -d --name dtomcat-container -p 8082:8080 dtomcat
+
+build now 
+
+docker ps -a 
+
+docker images
+
+cd /opt/docker
+
+ls
+
+dockerpublicIP:8082/sample-webapps
+
+{ if u want to delete and redo }
+
+docker ps -a
+
+docker stop dtomcat-container
+
+docker ps -a
+
+docker rm dtomcat-container
+
+docker ps -a 
+
+docker images 
+
+docker rmi dtomcat 
+
+docker images
+
+again build 
+
+

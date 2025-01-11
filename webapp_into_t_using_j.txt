@@ -1,0 +1,16 @@
+export JAVA_HOME=usr/lib/jvm/java-17-amazon-coretto
+
+export M2_HOME=/opt/maven
+export M2=/opt/maven/bin
+export PATH=$PATH:$M2
+
+wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+
+rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+ln -s /opt/tomcat/bin/startup.sh /usr/bin/tomcat-start
+
+usermod -aG root ec2-user
+
+chmod -R g+w /opt/tomcat/webapps/
+
